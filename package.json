@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "animate.css": "^4.1.1",
+    "date-fns": "^2.29.3",
     "react": "^18.2.0",
+    "react-big-calendar": "^1.6.3",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.0"
   },

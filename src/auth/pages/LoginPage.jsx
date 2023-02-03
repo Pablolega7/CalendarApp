@@ -11,11 +11,10 @@ export const LoginPage = () => {
                             <input
                                 type="text"
                                 className="form-control"
-
                                 placeholder="Correo"
                             />
                         </div>
-                        <div className="form-group mb-2">
+                        <div className="d-grid gap-2">
                             <input
                                 type="password"
                                 className="form-control"
@@ -65,7 +64,7 @@ export const LoginPage = () => {
                             />
                         </div>
 
-                        <div className="form-group mb-2">
+                        <div className="form-grid mb-2">
                             <input
                                 type="submit"
                                 className="btnSubmit"

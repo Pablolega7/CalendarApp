@@ -5,7 +5,7 @@ import 'animate.css'
 import { CalendarApp } from './CalendarApp'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
+  // <React.StrictMode>
  <CalendarApp/>
-  </React.StrictMode>
+  // </React.StrictMode>
 )
