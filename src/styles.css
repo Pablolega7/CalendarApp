@@ -47,21 +47,58 @@
   right         : 25px;
   position      : fixed;
   animation     : pulse 3s infinite;
-  color         : aqua;
+  background    : green;
+  border-color  : black;
 }
 @keyframes pulse {
   0% {
-      transform: scale(1);
+      transform : scale(1);
 
   }
 
   50% {
-      transform: scale(1.05);
+      transform : scale(1.05);
 
   }
 
   100% {
-      transform: scale(1);
+      transform : scale(1);
 
   }
 }
+
+.fab-danger{
+  border-radius : 100%;
+  bottom        : 25px;
+  font-size     : 20px;
+  width         : 60px;
+  left          : 25px;
+  position      : fixed;
+  height        : 60px;
+
+  animation     : pulse 3s infinite;
+
+}
+
+@keyframes pulse {
+  0% {
+      transform : scale(1);
+
+  }
+
+  50% {
+      transform : scale(1.05);
+
+  }
+
+  100% {
+      transform : scale(1);
+
+  }
+}
+
+.fab-danger:hover{
+  color      : red;
+  background : black;
+}
+
