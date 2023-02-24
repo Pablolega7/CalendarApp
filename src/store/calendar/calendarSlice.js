@@ -17,10 +17,10 @@ const temEvents =  {
 export const calendarSlice = createSlice({
     name         : 'calendar',
     initialState : {
-       events       : [
+       events: [
         temEvents
       ],
-       activeEvent : null,
+       activeEvent: null,
     },
     reducers     : {
         onSetActiveEvent : ( state, { payload } ) => {
