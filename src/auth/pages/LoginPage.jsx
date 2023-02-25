@@ -1,5 +1,7 @@
 import { useAuthStore, useForm } from '../../hooks';
 import './loginPage.css';
+import { useEffect } from 'react';
+import Swal from 'sweetalert2';
 
 const loginFormFields = {
     loginEmail    : '',
@@ -15,7 +17,7 @@ const registerFormFields = {
 
 export const LoginPage = () => {
 
-    const { startLogin }                                                                                             = useAuthStore();
+    const { startLogin, errorMessage }                                                                               = useAuthStore();
     const { loginEmail, loginPassword, onInputChange: onLoginInputChange }                                           = useForm( loginFormFields );
     const { registerName, registerEmail, registerPassword, registerPassword2, onInputChange: onRegisterInputChange } = useForm( registerFormFields );
 
@@ -29,13 +31,15 @@ export const LoginPage = () => {
         console.log({ registerName, registerEmail, registerPassword, registerPassword2 });
     };
 
+    useEffect(() => { if ( errorMessage !== undefined ) {Swal.fire( 'Authentication Error', errorMessage, 'error' );}}, [ errorMessage ]);
+
     return (
-        <div className = "container login-container animate__animated animate__backInDown">
-            <div className = "row">
-                <div className = "col-md-6 login-form-1">
+        <div className="container login-container animate__animated animate__backInDown">
+            <div className="row">
+                <div className="col-md-6 login-form-1">
                     <h3>Income</h3>
-                    <form onSubmit     = { loginSubmit }>
-                        <div className = "form-group mb-2">
+                    <form onSubmit    ={ loginSubmit }>
+                        <div className="form-group mb-2">
                             <input
                                 type        = "text"
                                 className   = "form-control"
@@ -45,7 +49,7 @@ export const LoginPage = () => {
                                 onChange    = { onLoginInputChange }
                             />
                         </div>
-                        <div className = "d-grid gap-2">
+                        <div className="rm-group mb-2">
                             <input
                                 type        = "password"
                                 className   = "form-control"
@@ -55,7 +59,7 @@ export const LoginPage = () => {
                                 onChange    = { onLoginInputChange }
                             />
                         </div>
-                        <div className = "form-group mb-2">
+                        <div className="d-grid gap-2">
                             <input
                                 type      = "submit"
                                 className = "btnSubmit"
@@ -67,8 +71,8 @@ export const LoginPage = () => {
 
                 <div className = "col-md-6 login-form-2">
                     <h3>Register</h3>
-                    <form onSubmit     = { registerSubmit }>
-                        <div className = "form-group mb-2">
+                    <form onSubmit    ={ registerSubmit }>
+                        <div className="form-group mb-2">
                             <input
                                 type        = "text"
                                 className   = "form-control"
@@ -78,7 +82,7 @@ export const LoginPage = () => {
                                 onChange    = { onRegisterInputChange }
                             />
                         </div>
-                        <div className = "form-group mb-2">
+                        <div className="form-group mb-2">
                             <input
                                 type        = "email"
                                 className   = "form-control"
@@ -88,7 +92,7 @@ export const LoginPage = () => {
                                 onChange    = { onRegisterInputChange }
                             />
                         </div>
-                        <div className = "form-group mb-2">
+                        <div className="form-group mb-2">
                             <input
                                 type        = "password"
                                 className   = "form-control"
@@ -99,7 +103,7 @@ export const LoginPage = () => {
                             />
                         </div>
 
-                        <div className = "form-group mb-2">
+                        <div className="form-group mb-2">
                             <input
                                 type        = "password"
                                 className   = "form-control"
@@ -110,7 +114,7 @@ export const LoginPage = () => {
                             />
                         </div>
 
-                        <div className = "form-grid mb-2">
+                        <div className="form-grid mb-2">
                             <input
                                 type      = "submit"
                                 className = "btnSubmit"
