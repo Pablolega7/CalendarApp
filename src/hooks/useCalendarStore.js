@@ -1,9 +1,9 @@
 import { useSelector,useDispatch } from 'react-redux';
 import calendarApi from '../api/calendarApi';
 import { onSetActiveEvent, onAddNewEvent, onUpdateEvent, onDeleteEvent } from '../store/calendar/calendarSlice';
+import { convertEventsToDateEvents } from '../helpers/convertEventsToDateEvents';
 
 export const useCalendarStore = () => {
-
     const dispatch                = useDispatch();
     const { events, activeEvent } = useSelector( state  => state.calendar );
     const { user }                = useSelector( state  => state.auth);
@@ -27,6 +27,18 @@ export const useCalendarStore = () => {
         dispatch( onDeleteEvent() );
     };
 
+    const startLoadingEvents = async () => {
+        try {
+            const { data } = await calendarApi.get( '/events' );
+            const event = convertEventsToDateEvents( data.events );
+            console.log(event);
+        }
+        catch (error) {
+            console.log(error);
+            console.log('Error on charge events');
+        }
+    };
+
     return {
 
         //Porperties//
@@ -38,5 +50,6 @@ export const useCalendarStore = () => {
         setActiveEvent,
         startSavingEvent,
         stardeletingteEvent,
+        startLoadingEvents
     };
 };
