@@ -67,6 +67,12 @@
   }
 }
 
+.fab:hover{
+  color        : white;
+  background   : blue;
+  border-color : black;
+}
+
 .fab-danger{
   border-radius : 100%;
   bottom        : 25px;
@@ -75,9 +81,7 @@
   left          : 25px;
   position      : fixed;
   height        : 60px;
-
   animation     : pulse 3s infinite;
-
 }
 
 @keyframes pulse {

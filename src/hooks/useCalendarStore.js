@@ -1,7 +1,8 @@
 import { useSelector,useDispatch } from 'react-redux';
 import calendarApi from '../api/calendarApi';
-import { onSetActiveEvent, onAddNewEvent, onUpdateEvent, onDeleteEvent } from '../store/calendar/calendarSlice';
+import { onSetActiveEvent, onAddNewEvent, onUpdateEvent, onDeleteEvent, onLoadEvents } from '../store/calendar/calendarSlice';
 import { convertEventsToDateEvents } from '../helpers/convertEventsToDateEvents';
+import Swal from 'sweetalert2';
 
 export const useCalendarStore = () => {
     const dispatch                = useDispatch();
@@ -13,13 +14,17 @@ export const useCalendarStore = () => {
     };
 
     const startSavingEvent = async ( calendarEvent ) => {
-
-        if (calendarEvent._id) {
-            dispatch( onUpdateEvent( calendarEvent ));
-
-        } else {
-            const { data } = await calendarApi.post( '/events', calendarEvent );
-            dispatch( onAddNewEvent( { ...calendarEvent, id: data.id, user }));
+        try {
+            if (calendarEvent.id) {
+                await calendarApi.put( `/events/${ calendarEvent.id }`, calendarEvent );
+                dispatch( onUpdateEvent( { ...calendarEvent , user } ));
+                return;
+            }
+                const { data } = await calendarApi.post( '/events', calendarEvent );
+                dispatch( onAddNewEvent( { ...calendarEvent, id: data.id, user }));
+        }
+        catch (error) {
+            Swal.fire( 'Failed to Save', error.response.data.msg, 'error' );
         };
     };
 
@@ -30,8 +35,8 @@ export const useCalendarStore = () => {
     const startLoadingEvents = async () => {
         try {
             const { data } = await calendarApi.get( '/events' );
-            const event = convertEventsToDateEvents( data.events );
-            console.log(event);
+            const events = convertEventsToDateEvents( data.events );
+            dispatch( onLoadEvents( events ));
         }
         catch (error) {
             console.log(error);
