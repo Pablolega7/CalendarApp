@@ -3,26 +3,24 @@ import { Calendar } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { localizer, getMessages } from '../../helpers';
 import { useState } from "react";
-import { useUiStore, useCalendarStore } from "../../hooks";
+import { useUiStore, useCalendarStore, useAuthStore } from "../../hooks";
 import { useEffect } from "react";
 
 export const CalendarPage = () => {
 
-    const { openDateModal }                 = useUiStore();
+    const { user }                                       = useAuthStore();
+    const { openDateModal }                              = useUiStore();
+    const { events, setActiveEvent, startLoadingEvents } = useCalendarStore();
+    const [ lastView, setLastView ]                      = useState( localStorage.getItem( 'lastView' ) || 'week');
 
-    const { events, setActiveEvent, startLoadingEvents }        = useCalendarStore();
-
-    const [ lastView, setLastView ]         = useState( localStorage.getItem( 'lastView' ) || 'week');
-
-    const eventStyleGetter                  = ( events, start, end, isSelected ) => {
-
-        const style = {
-            backgroundColor : '#367CF7',
+    const eventStyleGetter                               = ( events, start, end, isSelected ) => {
+        const isMyEvent = ( user.uid === events.user._id )|| ( user.uid === events.user.uid );
+        const style     = {
+            backgroundColor : isMyEvent ? '#367CF7' : '#465660',
             borderRadius    : '0px',
             opacity         : 0.8,
             color           : 'white',
         };
-
         return {
             style
         };
@@ -33,7 +31,6 @@ export const CalendarPage = () => {
     };
 
     const onSelect = ( event ) => {
-        // console.log( {click: event} );
         setActiveEvent( event );
     };
 
@@ -43,7 +40,6 @@ export const CalendarPage = () => {
     };
 
     useEffect(() => { startLoadingEvents() }, []);
-
 
     return (
         <>
@@ -64,7 +60,6 @@ export const CalendarPage = () => {
                 onSelectEvent      = { onSelect }
                 onView             = { onViewChanged }
             />
-
             <CalendarModal />
             <FabAddNew />
             <FabDelete />
