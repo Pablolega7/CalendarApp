@@ -28,8 +28,14 @@ export const useCalendarStore = () => {
         };
     };
 
-    const stardeletingteEvent = () => {
-        dispatch( onDeleteEvent() );
+    const stardeletingteEvent = async () => {
+        try {
+            await calendarApi.delete( `/events/${ activeEvent.id }` );
+            dispatch( onDeleteEvent() );
+        }
+        catch (error) {
+            Swal.fire( 'Failed to Delete', error.response.data.msg, 'error' );
+        }
     };
 
     const startLoadingEvents = async () => {

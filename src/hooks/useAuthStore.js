@@ -1,9 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import calendarApi from "../api/calendarApi";
-import { onChecking } from "../store/auth/authSlice";
-import { onLogin } from "../store/auth/authSlice";
-import { onLogout } from "../store/auth/authSlice";
-import { clearErrorMessage } from "../store/auth/authSlice";
+import { onChecking, onLogin, onLogout, clearErrorMessage } from "../store/auth/authSlice";
+import { onLogoutCalendar } from "../store/calendar/calendarSlice";
 
 export const useAuthStore = () => {
 
@@ -67,18 +65,19 @@ export const useAuthStore = () => {
 
   const startLogout = () => {
     localStorage.clear();
+    dispatch( onLogoutCalendar() );
     dispatch( onLogout() );
   };
 
   return {
     //Properties
+    errorMessage,
     status,
     user,
-    errorMessage,
     //Methods
+    checkAuthToken,
     startLogin,
     startRegister,
-    checkAuthToken,
     startLogout
   };
 };
